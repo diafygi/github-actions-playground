@@ -68,6 +68,18 @@ jobs:
           $PEBBLE_BIN -h || true
           coverage run --source . --omit ./setup.py -m unittest tests
 
+      - name: Run tests against staging
+        env:
+          STAGING_SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
+        run: |
+          sudo apt install sshfs
+          touch $HOME/sshfs_key.pem
+          chmod 600 $HOME/sshfs_key.pem
+          echo "$STAGING_SSH_KEY" > $HOME/sshfs_key.pem
+          mkdir -p /tmp/challenge-files
+          sshfs -oIdentityFile=$HOME/sshfs_key.pem challengeuser@staging.gethttpsforfree.com:/acme-challenge /tmp/challenge-files
+          ls -lah /tmp/challenge-files
+
       - name: Print coverage report
         run: coverage report -m
 
