@@ -79,7 +79,7 @@ jobs:
           echo "$STAGING_SSH_KEY" > $SSHFS_KEYFILE
           mkdir -p /tmp/challenge-files
           ls -lah $SSHFS_KEYFILE
-          sshfs -o StrictHostKeyChecking=no,debug,IdentityFile=$SSHFS_KEYFILE -p 2299 challengeuser@staging.gethttpsforfree.com:/acme-challenge /tmp/challenge-files
+          nohup sshfs -o StrictHostKeyChecking=no,debug,IdentityFile=$SSHFS_KEYFILE -p 2299 challengeuser@staging.gethttpsforfree.com:/acme-challenge /tmp/challenge-files &
           ls -lah /tmp/challenge-files
           fusermount -u /tmp/challenge-files
 
