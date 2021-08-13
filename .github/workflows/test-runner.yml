@@ -83,8 +83,9 @@ jobs:
           echo "----------3"
           pwd
           echo "$HOME"
+          echo "----------4"
           mkdir -p /tmp/challenge-files
-          sshfs -oIdentityFile=$HOME/sshfs_key.pem -p 2299 challengeuser@staging.gethttpsforfree.com:/acme-challenge /tmp/challenge-files
+          sshfs -o debug -oIdentityFile=$HOME/sshfs_key.pem -p 2299 challengeuser@staging.gethttpsforfree.com:/acme-challenge /tmp/challenge-files
           ls -lah /tmp/challenge-files
           fusermount -u /tmp/challenge-files
 
