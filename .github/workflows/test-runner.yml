@@ -63,9 +63,8 @@ jobs:
           pip install -U -r tests/requirements.txt
 
       - name: Run tests with coverage
-        env:
-          PEBBLE_BIN: $GOPATH/bin/pebble
         run: |
+          export PEBBLE_BIN=$(go env GOPATH)/bin/pebble
           $PEBBLE_BIN -h || true
           coverage run --source . --omit ./setup.py -m unittest tests
 
