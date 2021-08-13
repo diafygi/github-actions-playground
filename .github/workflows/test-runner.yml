@@ -53,7 +53,7 @@ jobs:
             export PATH=$PATH:$(go env GOPATH)/bin
             go get -u github.com/letsencrypt/pebble/...
             cd $GOPATH/src/github.com/letsencrypt/pebble && go install ./...
-            pebble -h
+            pebble -h || true
 
       - name: Setup python
         uses: actions/setup-python@v2
@@ -69,7 +69,9 @@ jobs:
       - name: Run tests with coverage
         env:
           PEBBLE_BIN: pebble
-        run: $PEBBLE_BIN -h && coverage run --source . --omit ./setup.py -m unittest tests
+        run: |
+          $PEBBLE_BIN -h || true
+          coverage run --source . --omit ./setup.py -m unittest tests
 
       - name: Print coverage report
         run: coverage report -m
