@@ -77,8 +77,9 @@ jobs:
           chmod 600 $HOME/sshfs_key.pem
           echo "$STAGING_SSH_KEY" > $HOME/sshfs_key.pem
           mkdir -p /tmp/challenge-files
-          sshfs -oIdentityFile=$HOME/sshfs_key.pem challengeuser@staging.gethttpsforfree.com:/acme-challenge /tmp/challenge-files
+          sshfs -oIdentityFile=$HOME/sshfs_key.pem -p 2299 challengeuser@staging.gethttpsforfree.com:/acme-challenge /tmp/challenge-files
           ls -lah /tmp/challenge-files
+          fusermount -u /tmp/challenge-files
 
       - name: Print coverage report
         run: coverage report -m
