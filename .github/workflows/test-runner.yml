@@ -81,7 +81,7 @@ jobs:
           echo "-------------0"
           ls -lah $SSHFS_KEYFILE
           echo "-------------1"
-          sshfs -o StrictHostKeyChecking=no,debug,IdentityFile=$SSHFS_KEYFILE -p 2299 challengeuser@staging.gethttpsforfree.com:/acme-challenge /tmp/challenge-files
+          nohup sshfs -o StrictHostKeyChecking=no,debug,IdentityFile=$SSHFS_KEYFILE -p 2299 challengeuser@staging.gethttpsforfree.com:/acme-challenge /tmp/challenge-files &
           echo "-------------2"
           sleep 4
           echo "-------------3"
