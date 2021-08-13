@@ -39,7 +39,7 @@ jobs:
           pip install -U -r tests/requirements.txt
 
       - name: Run tests with coverage
-        run: coverage run --source . -m unittest tests
+        run: coverage run --source . --omit ./setup.py -m unittest tests
 
       - name: Print coverage report
         run: coverage report -m

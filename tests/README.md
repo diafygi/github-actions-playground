@@ -6,7 +6,7 @@ pip install -U -r tests/requirements.txt
 
 # run tests with coverage
 coverage erase
-coverage run --source . -m unittest tests
+coverage run --source . --omit ./setup.py -m unittest tests
 coverage report -m
 coverage html
 ```
