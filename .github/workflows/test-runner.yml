@@ -73,19 +73,13 @@ jobs:
           STAGING_SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
         run: |
           sudo apt install sshfs
-          touch $HOME/sshfs_key.pem
-          chmod 600 $HOME/sshfs_key.pem
-          echo "$STAGING_SSH_KEY" > $HOME/sshfs_key.pem
-          echo "----------1"
-          echo "$STAGING_SSH_KEY"
-          echo "----------2"
-          cat $HOME/sshfs_key.pem
-          echo "----------3"
-          pwd
-          echo "$HOME"
-          echo "----------4"
+          export SSHFS_KEYFILE=$(pwd)/sshfs_key.pem
+          touch $SSHFS_KEYFILE
+          chmod 600 $SSHFS_KEYFILE
+          echo "$STAGING_SSH_KEY" > $SSHFS_KEYFILE
           mkdir -p /tmp/challenge-files
-          sshfs -o debug -oIdentityFile=$HOME/sshfs_key.pem -p 2299 challengeuser@staging.gethttpsforfree.com:/acme-challenge /tmp/challenge-files
+          ls -lah $SSHFS_KEYFILE
+          sshfs -o StrictHostKeyChecking=no,debug,IdentityFile=$SSHFS_KEYFILE -p 2299 challengeuser@staging.gethttpsforfree.com:/acme-challenge /tmp/challenge-files
           ls -lah /tmp/challenge-files
           fusermount -u /tmp/challenge-files
 
